@@ -12,6 +12,55 @@
   background-position: center;
 }
 
+#modal {
+	background-color: rgba(0,0,0,0.4);
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+	overflow: auto;
+	display: none;
+}
+
+#modal-box {
+	background: white;
+	height: 350px;
+	width: 550px;
+	border-radius: 2px;
+	overflow: auto;
+	margin: 150px auto;
+	box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+	padding: 2%;
+	line-height: 120%;
+}
+
+#modal-start {
+  display: block;
+  height: 50px;
+  width: 300px;
+  font-family: sans-serif;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 20px;
+  border: 3px solid rgb(153, 29, 29);
+  color: rgba(0,0,0,.25);
+}
+
+#start-btn {
+  display: block;
+  background-color: rgb(153, 29, 29);
+  color: white;
+  border: 1px solid rgb(78, 9, 9);
+  padding: 10px;
+  margin: 5px auto;
+}
+
+#start-btn:hover {
+  border: 1px solid white;
+  cursor: pointer;
+}
 header {
   display: flex;
   background: rgb(187, 166, 75);
@@ -114,11 +163,12 @@ main {
 }
 
 .player-actions, .comp-actions {
-  display: flex;
+  
   justify-content: center;
   width: 60%;
   height: 10%;
   margin: 10% auto;
+  display: none;
 
 
 }
@@ -131,6 +181,9 @@ main {
   height: 100%;
   margin: 0 auto;
   border-radius: 12px;
+  object-fit: contain;
+
+
   /* opacity: 0.8; */
 
 }
@@ -142,19 +195,17 @@ main {
 
 #player-action-1 {
   background: rgb(187, 166, 75) url('../images/Knight-sword.png') no-repeat;
-  object-fit: contain;
   background-position: center;
+
 
 }
 
 #player-action-2 {
   background: rgb(187, 166, 75) url('../images/Knight-shield.png') no-repeat;
-  object-fit: contain;
   background-position: center;
 
 }
 
 #player-action-3 {
   background: rgb(187, 166, 75) url('../images/run.png') no-repeat;
-  object-fit: contain;
   background-position: center;
