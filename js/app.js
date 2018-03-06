@@ -65,8 +65,10 @@ $( () => {
     hp: 20,
     def: 12,
     init: 0,
-    actionsImages = [ '../images/Knight-sword.png', '../images/Knight-shield.png', '../images/run.png' ],
-    actionsTitles = ['Slash', 'Fend', 'Charge'],
+    playerImage: "'images/Knight-player.png'",
+    compImage: "'images/Knight-comp.png'",
+    actionsImages: [ "'images/Knight-sword.png'", "'images/Knight-shield.png'", "'images/run.png'" ],
+    actionsTitles: ['Slash', 'Fend', 'Charge'],
     actionOne() {
         console.log('make this an attack!');
     },
@@ -84,8 +86,10 @@ const archer = {
   hp: 20,
   def: 12,
   init: 0,
-  actionsImages = [ '../images/Archer-bow.png', '../images/Archer-multishot.png'],
-  actionsTitles = ['Snipe','Barrage'],
+  playerImage: "'images/Archer-player.png'",
+  compImage: "'images/Archer-comp.png'",
+  actionsImages: [ "'images/Archer-bow.png'", "'images/Archer-multishot.png'"],
+  actionsTitles: ['Snipe','Barrage'],
   actionOne(){
       console.log(archer.name + ' uses ' + actionsTitles[0] + ' make this an attack!');
   },
@@ -100,8 +104,10 @@ const warrior = {
   hp: 20,
   def: 12,
   init: 0,
-  actionsImages = [ '../images/Warrior-axe.png', '../images/Warrior-axe-throw.png'],
-  actionsTitles = ['Hack','Axe Throw'],
+  playerImage: "'images/Warrior-player.png'",
+  compImage: "'images/Warrior-comp.png'",
+  actionsImages: [ "'images/Warrior-axe.png'", "'images/Warrior-axe-throw.png'"],
+  actionsTitles: ['Hack','Axe Throw'],
   actionOne(){
       console.log('make this an attack!');
   },
@@ -116,8 +122,10 @@ const amazon = {
   hp: 20,
   def: 12,
   init: 0,
-  actionsImages = [ '../images/Amazon-sword.png', '../images/Amazon-shield.png'],
-  actionsTitles = ['Pierce','Shield Wall'],
+  playerImage: "'imagesAmazon-player.png'",
+  compImage: "'images/Amazon-comp.png'",
+  actionsImages: [ "'images/Amazon-sword.png'", "'images/Amazon-shield.png'"],
+  actionsTitles: ['Pierce','Shield Wall'],
   actionOne(){
       console.log('make this an attack!');
   },
@@ -132,8 +140,10 @@ const darkKnight = {
   hp: 20,
   def: 12,
   init: 0,
-  actionsImages = [ '../images/DarkKnight-sword.png', '../images/DarkKnight-doublestrike.png'],
-  actionsTitles = ['Rend','Double Strike'],
+  playerImage: "'images/DarkKnight-player.png'",
+  compImage: "'images/DarkKnight-comp.png'",
+  actionsImages: [ "'images/DarkKnight-sword.png'", "'images/DarkKnight-doublestrike.png'"],
+  actionsTitles: ['Rend','Double Strike'],
   actionOne(){
       console.log('make this an attack!');
   },
@@ -159,6 +169,7 @@ const $compImage = $('.comp-image')
 // grab the comp-actions div
 const $compActions = $('.comp-actions')
 
+
 // open modal
 const openModal = () => {
   $modal.css('display','block');
@@ -169,7 +180,9 @@ const startGame = () => {
   closeModal();
   console.log(heroName);
   console.log('MAKE THIS START THE GAME!!!!!');
-  placeHero();
+  createKnightPlayer();
+  // placeHero();
+  // placeComp();
 }
 
 // close modal
@@ -178,17 +191,34 @@ const closeModal = () => {
 }
 
 
-const placeHero = () => {
-  $playerImage.attr('id','knight-player');
-  $playerActions.css('display','flex')
-}
+// const placeHero = () => {
+//   $playerImage.attr('id','knight-player');
+//   $playerActions.css('display','flex')
+//   createKnightPlayer();
+// }
 
 const placeComp = () => {
-  enemyName = archer.name
-  $
+  enemyName = archer.name.toLowerCase();
+  $compImage.attr('id', enemyName + '-comp');
+  $compActions.css('display','flex');
+  createArcherComp();
 
 }
 
+const createKnightPlayer = ()=> {
+  $playerImage.css({"background":"url(" + knight.playerImage + ")", "background-position": "center"})
+  for ( i = 0; i < knight.actionsImages.length; i++) {
+    const $actionBtn = $('<div>').addClass('btn').attr('id','player-action-' + [i+1]).css({"background-image": "url(" + knight.actionsImages[i] + ")", "background-position":"center"})
+    $playerActions.append($actionBtn);
+  }
+};
+
+const createArcherComp = ()=> {
+  for ( i = 0; i < archer.actionsImages.length; i++) {
+    const $actionBtn = $('<div>').addClass('btn').attr('id','comp-action-' + [i+1]).css({"background-image": "url(" + archer.actionsImages[i] + ")", "background-position":"center"})
+    $compActions.append($actionBtn);
+  }
+}
 
 
 
@@ -198,5 +228,5 @@ const placeComp = () => {
 
 
 openModal();
-console.log(darkKnight.hp);
+
 }); //<-- end document.onload
