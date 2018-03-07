@@ -16,7 +16,7 @@ $( () => {
     hp: 20,
     def: 10,
     init: Math.floor(Math.random() * 20),
-    hitPercentage: 4,
+    hitPercentage: 7,
     playerImage: "'images/Knight-player.png'",
     compImage: "'images/Knight-comp.png'",
     actionsImages: [ "'images/Knight-sword.png'", "'/images/Knight-shield.png'", "'/images/run.png'" ],
@@ -293,7 +293,14 @@ const $newRoundModal = $('#new-round-modal');
 // grab the new-round-modal-box div
 const $newRoundModalBox = $('#new-round-modal-box');
 // grab the new-round-btn div
-const $newRoundBtn = $('#new-round-btn')
+const $newRoundBtn = $('#new-round-btn');
+// grab the game-win-modal
+const $gameWinModal = $('#game-win-modal');
+// grab the game-win-modal-box
+const $gameWinModalBox = $('#game-win-modal-box');
+// grab the game-win-button
+const $gameWinButton = $('#game-win-btn')
+
 
 // open modal
 const openModal = () => {
@@ -423,7 +430,7 @@ const closeModal = () => {
   }
 
   const gameWin = () => {
-    console.log('GAME WIN!');
+    gameWinModal();
   }
 
 
@@ -433,24 +440,42 @@ const closeModal = () => {
 
 
   const newRoundModal = () => {
+      if (currentEnemy === darkKnight) {
+        gameWin();
+      }
     $newRoundModal.css('display','block')
     const $modalHeader = $('<h1>')
-    $modalHeader.remove();
+    const $modalText = $('<p>')
+    $('#new-round-modal-box p').remove();
+    $('#new-round-modal-box h1').remove();
     $newRoundModalBox.prepend($modalHeader);
-    $modalHeader.text('Round ' + currentRound);
+    $modalText.text('You have defeated the ' + currentEnemy.name + ' !').insertAfter('#new-round-modal-box h1')
+    $('#new-round-modal-box h1').text('Round ' + currentRound);
 
   }
 
   const closeNewRoundModal = () => {
-    $newRoundModal.css('display','none')
+    $newRoundModal.css('display','none');
   }
 
+  const gameWinModal = () => {
+    $gameWinModal.css('display','block');
+
+  }
+
+  const closeGameWinModal = () => {
+    $gameWinModal.css('display','none');
+  }
   // close the modal and start game
   $startBtn.on('click', startGame);
 
   // close new round modal and start new Round
   $newRoundBtn.on('click', closeNewRoundModal);
   $newRoundBtn.on('click', nextEnemy)
+
+  // close game win modal and start new game
+  $gameWinButton.on('click', closeGameWinModal)
+  $gameWinButton.on('click', location.reload)
 
 openModal();
 

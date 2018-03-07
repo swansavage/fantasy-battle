@@ -35,21 +35,35 @@
 	overflow: auto;
 	display: none;
 }
+
+#game-win-modal {
+	background-color: rgba(0,0,0,0.4);
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+	overflow: auto;
+	display: none;
+}
 .modal-box {
-	background: white;
+	background: rgba(255,255,255,.8);
 	height: 350px;
 	width: 550px;
-	border-radius: 2px;
+	border-radius: 10px;
+  border: 3px solid gold;
 	overflow: auto;
 	margin: 150px auto;
 	box-shadow: 0 2px 2px rgba(0,0,0,0.2);
 	padding: 2%;
 	line-height: 120%;
+  text-align: center;
 }
 
 #new-round-modal-box {
 	background: white;
-	height: 150px;
+	height: 175px;
 	width: 550px;
 	border-radius: 2px;
 	overflow: auto;
@@ -59,12 +73,24 @@
 	line-height: 120%;
 }
 
+#game-win-modal-box {
+	background: white;
+	height: 175px;
+	width: 550px;
+	border-radius: 2px;
+	overflow: auto;
+	margin: 150px auto;
+	box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+	padding: 2%;
+	line-height: 120%;
+  text-align: center;
+}
 #modal-start {
   display: block;
   height: 50px;
   width: 300px;
   font-family: sans-serif;
-  margin: 0 auto;
+  margin: 40px auto 10px;
   text-align: center;
   font-size: 20px;
   border: 3px solid rgb(153, 29, 29);
@@ -74,7 +100,7 @@
   font-family: 'Mina', sans-serif;
   margin: 20px auto;
   line-height: normal;
-  color: blue;
+  color: rgb(187, 166, 75);
   font-size: 20px;
   /* margin: 20px auto; */
 }
@@ -88,7 +114,7 @@
   margin: 5px auto;
 }
 
-#new-round-btn {
+#new-round-btn, #game-win-btn {
   display: block;
   background-color: rgb(153, 29, 29);
   color: white;
@@ -119,7 +145,7 @@ header {
 h1 {
   text-align: center;
   color: white;
-  font-family: fantasy;
+  font-family: 'Mina', sans-serif;
   font-size: 45px;
 }
 
@@ -151,28 +177,27 @@ main {
 }
 
 .player-status, .comp-status {
-  /* border: 1px solid green; */
-  width: 80%;
-  height: 10%;
+  border-bottom: 3px solid rgba(238, 211, 116, 0.9);
+  border-radius: 10px;
+  /* background: rgba(255,255,255,.8); */
+  width: 250px;
+  height: 50px;
   margin: 10% auto;
-  font-size: 30px;
+  font-size: 25px;
   color: rgb(0, 156, 6);
   font-weight: bold;
+  padding: 15px;
 }
 
 .player-status {
-  text-align: left;
+  text-align: center;
 }
 
 .comp-status {
-  text-align: right;
+  text-align: center;
 }
 
-.comp-status {
-  font-size: 30px;
-  color: rgb(0, 156, 6);
-  font-weight: bold;
-}
+
 .player-image, .comp-image {
   display: block;
   background-position: center;
@@ -321,7 +346,7 @@ main {
   text-align: center;
   font-size: 75px;
   color: white;
-  font-family: sans-serif;
+  font-family: 'Mina', sans-serif;
   background: rgba(238, 211, 116, 0.9);
   padding: 20px;
   border-radius: 100px;
