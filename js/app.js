@@ -20,7 +20,7 @@ $( () => {
     actionsTitles: ['Slash', 'Fend', 'Charge'],
     actionOne() {
 
-        console.log(knight.hitPercentage + Math.floor(Math.random() * 20));
+        console.log(currentEnemy);
         if (knight.hitPercentage + Math.floor(Math.random() * 20) > currentEnemy.def) {
             currentEnemy.hp -= 2;
             const $damageText = $('<h2>').attr('class','damage').appendTo($compImage);
@@ -32,7 +32,7 @@ $( () => {
           const $missText = $('<h2>').attr('class','missed').appendTo($compImage);
           $missText.empty();
           $missText.text('Miss!').fadeOut(1000);
-          console.log('NOT THIS TIME');
+
         }
     },
     actionTwo() {
@@ -209,10 +209,18 @@ const closeModal = () => {
   }
 
   const nextEnemy = () => {
-    
+    if (currentEnemy === darkknight) {
+      gameWin();
+    }
+    enemies.shift();
+    currentEnemy = enemies[0];
+    $('.btn').remove()
+    startGame();
   }
 
-
+  const gameWin = () => {
+    console.log('GAME WIN!');
+  }
   // close the modal and start game
   $startBtn.on('click', startGame);
 
