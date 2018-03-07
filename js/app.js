@@ -76,7 +76,7 @@ $( () => {
 const archer = {
   name: 'Archer',
   hp: 18,
-  def: 11,
+  def: 10,
   init: Math.floor(Math.random() * 20),
   hitPercentage: 2,
   playerImage: "'images/Archer-player.png'",
@@ -450,7 +450,7 @@ const closeModal = () => {
     $('#new-round-modal-box h1').remove();
     $newRoundModalBox.prepend($modalHeader);
     $modalText.text('You have defeated the ' + currentEnemy.name + ' !').insertAfter('#new-round-modal-box h1')
-    $('#new-round-modal-box h1').text('Round ' + currentRound);
+    $('#new-round-modal-box h1').text('Get ready for Round ' + currentRound);
 
   }
 
