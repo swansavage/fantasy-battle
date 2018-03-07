@@ -1,57 +1,4 @@
-// console.log('hello');
-// console.log($);
 
-//================== CLASSES ===================////
-
-// $(()=>{
-//
-//
-//
-// class Hero {
-//     constructor(name, health, def, firstAttack, secondAttack) {
-//       this.name = name;
-//       this.health = health
-//       this.def = def;
-//       this.firstAttack = firstAttack;
-//       this.secondAttack = secondAttack;
-//       this.init = 0;
-//
-//     }
-//     attackOne(){
-//
-//       console.log(this.name + ' uses Attack 1!');
-//       console.log('this is this', $(this));
-//     }
-//     attackTwo(enemy){
-//       console.log(this.name + ' uses Attack 2!');
-//     }
-//     run(){
-//       console.log(this.name + 'flees the battle!');
-//     }
-//
-// };
-//
-//
-//
-//   //enemy class
-// class CompEnemy extends Hero {
-//   constructor(name, health, def, firstAttack, secondAttack){
-//     super();
-//   }
-//   attackOne(player){
-//     console.log(this.name + ' uses attack 1! ');
-//   }
-//   attackTwo(player){
-//     console.log(this.name + ' uses attack 2!');
-//   }
-// };
-//
-//
-//
-//
-//     var self = this;
-//     const playerOne = new Hero('Player 1',18,20,'Sword','Shield Bash' )
-//     const warrior = new CompEnemy('Warrior',14,20,'Axe','Axe Throw');
 
 $( () => {
 
@@ -60,17 +7,26 @@ $( () => {
   // create a variable to hold the name of which Enemy hero we are facing
   let compName = "";
 
+
   const knight = {
     name: heroName,
     hp: 20,
-    def: 12,
-    init: 0,
+    def: 15,
+    init: Math.floor(Math.random() * 20),
+    hitPercentage: 7,
     playerImage: "'images/Knight-player.png'",
     compImage: "'images/Knight-comp.png'",
-    actionsImages: [ "'images/Knight-sword.png'", "'images/Knight-shield.png'", "'images/run.png'" ],
+    actionsImages: [ "'images/Knight-sword.png'", "'/images/Knight-shield.png'", "'/images/run.png'" ],
     actionsTitles: ['Slash', 'Fend', 'Charge'],
     actionOne() {
-        console.log('make this an attack!');
+        if (knight.hitPercentage + Math.floor(Math.random() * 20) > currentEnemy.def) {
+            enemies[0].hp -= 2;
+            const $damageText = $('<h2>').attr('class','damage').appendTo($compImage);
+            $damageText.text('- 2').fadeOut(1000);
+            $compStatus.empty().text(enemies[0].name + '\'s HP: ' + enemies[0].hp);
+        } else {
+          console.log('NOT THIS TIME');
+        }
     },
     actionTwo() {
         console.log('make this shield Bash!');
@@ -83,9 +39,10 @@ $( () => {
 
 const archer = {
   name: 'Archer',
-  hp: 20,
-  def: 12,
-  init: 0,
+  hp: 18,
+  def: 8,
+  init: Math.floor(Math.random() * 20),
+  hitPercentage: 5,
   playerImage: "'images/Archer-player.png'",
   compImage: "'images/Archer-comp.png'",
   actionsImages: [ "'images/Archer-bow.png'", "'images/Archer-multishot.png'"],
@@ -101,9 +58,10 @@ const archer = {
 
 const warrior = {
   name: 'Warrior',
-  hp: 20,
-  def: 12,
-  init: 0,
+  hp: 22,
+  def: 10,
+  init: Math.floor(Math.random() * 20),
+  hitPercentage: 6,
   playerImage: "'images/Warrior-player.png'",
   compImage: "'images/Warrior-comp.png'",
   actionsImages: [ "'images/Warrior-axe.png'", "'images/Warrior-axe-throw.png'"],
@@ -119,10 +77,11 @@ const warrior = {
 
 const amazon = {
   name: 'Amazon',
-  hp: 20,
-  def: 12,
-  init: 0,
-  playerImage: "'imagesAmazon-player.png'",
+  hp: 18,
+  def: 10,
+  init: Math.floor(Math.random() * 20),
+  hitPercentage: 7,
+  playerImage: "'images/Amazon-player.png'",
   compImage: "'images/Amazon-comp.png'",
   actionsImages: [ "'images/Amazon-sword.png'", "'images/Amazon-shield.png'"],
   actionsTitles: ['Pierce','Shield Wall'],
@@ -136,10 +95,11 @@ const amazon = {
 }
 
 const darkKnight = {
-  name: 'Dark Knight',
+  name: 'DarkKnight',
   hp: 20,
-  def: 12,
-  init: 0,
+  def: 15,
+  init: Math.floor(Math.random() * 20),
+  hitPercentage: 7,
   playerImage: "'images/DarkKnight-player.png'",
   compImage: "'images/DarkKnight-comp.png'",
   actionsImages: [ "'images/DarkKnight-sword.png'", "'images/DarkKnight-doublestrike.png'"],
@@ -153,6 +113,11 @@ const darkKnight = {
 
 }
 
+// array of all character objects
+const enemies = [archer, warrior, amazon, darkKnight]
+// keep track of which enemies we are facing
+let currentEnemy = enemies[0]
+
 // grab the modal element
 const $modal = $('#modal');
 
@@ -163,12 +128,15 @@ const $inputBox = $('#modal-start');
 // grab the player-image div
 const $playerImage = $('.player-image');
 // grab the player actions div
-const $playerActions = $('.player-actions')
+const $playerActions = $('.player-actions');
 // grab the comp-image div
-const $compImage = $('.comp-image')
+const $compImage = $('.comp-image');
 // grab the comp-actions div
-const $compActions = $('.comp-actions')
-
+const $compActions = $('.comp-actions');
+// grab the player-status div
+const $playerStatus = $('.player-status');
+// grab the comp-status div
+const $compStatus = $('.comp-status');
 
 // open modal
 const openModal = () => {
@@ -178,11 +146,8 @@ const openModal = () => {
 const startGame = () => {
   heroName = $inputBox.val();
   closeModal();
-  console.log(heroName);
-  console.log('MAKE THIS START THE GAME!!!!!');
-  createKnightPlayer();
-  // placeHero();
-  // placeComp();
+  placeHero();
+  placeComp(archer);
 }
 
 // close modal
@@ -191,42 +156,55 @@ const closeModal = () => {
 }
 
 
-// const placeHero = () => {
-//   $playerImage.attr('id','knight-player');
-//   $playerActions.css('display','flex')
-//   createKnightPlayer();
-// }
 
-const placeComp = () => {
-  enemyName = archer.name.toLowerCase();
-  $compImage.attr('id', enemyName + '-comp');
-  $compActions.css('display','flex');
-  createArcherComp();
+  // add player to document
+  const placeHero = () => {
+      $playerImage.attr('id','knight-player');
+      $playerActions.css('display','flex')
+      $playerStatus.text(heroName + '\'s HP: ' + knight.hp);
+        for (i = 0; i < knight.actionsImages.length; i++) {
+            const $actionBtn = $('<div>').addClass('btn')
+                                         .attr('id','player-action-' + [i + 1])
+                                         .appendTo($playerActions);
 
-}
+        } // end for-loop
+        const $playerActionOne = $('#player-action-1');
+        const $playerActionTwo = $('#player-action-2');
+        const $playerActionThree = $('#player-action-3');
+        $playerActionOne.on('click', knight.actionOne);
+        $playerActionTwo.on('click', knight.actionTwo);
+        $playerActionThree.on('click', knight.actionThree);
+} // end placeHero
 
-const createKnightPlayer = ()=> {
-  $playerImage.css({"background":"url(" + knight.playerImage + ")", "background-position": "center"})
-  for ( i = 0; i < knight.actionsImages.length; i++) {
-    const $actionBtn = $('<div>').addClass('btn').attr('id','player-action-' + [i+1]).css({"background-image": "url(" + knight.actionsImages[i] + ")", "background-position":"center"})
-    $playerActions.append($actionBtn);
-  }
-};
 
-const createArcherComp = ()=> {
-  for ( i = 0; i < archer.actionsImages.length; i++) {
-    const $actionBtn = $('<div>').addClass('btn').attr('id','comp-action-' + [i+1]).css({"background-image": "url(" + archer.actionsImages[i] + ")", "background-position":"center"})
-    $compActions.append($actionBtn);
-  }
-}
+  // add computer opponent to document
+  const placeComp = (enemy) => {
+      compName = enemy.name;
+      const $plug = enemy.name.toLowerCase();
+      $compImage.attr('id', $plug + '-comp');
+      $compActions.css('display','flex')
+      $compStatus.text(enemy.name + '\'s HP: ' + enemy.hp);
+        for ( i = 0; i < enemy.actionsImages.length; i++) {
+          const $actionBtn = $('<div>').addClass('btn')
+                                       .attr('id','comp-action-' + [i+1])
+                                       .css({"background-image": "url(" + enemy.actionsImages[i] + ")", "background-position": "center"})
+                                       .appendTo($compActions);
+        } // end for-loop
+  } // end placeComp
+
 
 
 
   // close the modal and start game
   $startBtn.on('click', startGame);
 
+  // player action 1
+
 
 
 openModal();
+
+
+
 
 }); //<-- end document.onload
