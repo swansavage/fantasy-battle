@@ -7,13 +7,14 @@ $( () => {
   // create a variable to hold the name of which Enemy hero we are facing
   let compName = "";
 
+  let userTurn = true;
 
   const knight = {
     name: heroName,
     hp: 20,
     def: 10,
     init: Math.floor(Math.random() * 20),
-    hitPercentage: 3,
+    hitPercentage: 4,
     playerImage: "'images/Knight-player.png'",
     compImage: "'images/Knight-comp.png'",
     actionsImages: [ "'images/Knight-sword.png'", "'/images/Knight-shield.png'", "'/images/run.png'" ],
@@ -31,7 +32,7 @@ $( () => {
           $missText.empty();
           $missText.text('Miss!').fadeOut(1000);
           $compStatus.empty().text('HP: ' + currentEnemy.hp + '  \nDEF: ' + currentEnemy.def);
-          enemyTurn();
+          compTurn();
         }
     },
     actionTwo() {
@@ -41,13 +42,13 @@ $( () => {
         $defText.empty();
         $defText.text('DEF + 2').fadeOut(1000);
         $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
-        enemyTurn();
+        compTurn();
       } else {
         const $defText = $('<h2>').attr('class','ineffective').appendTo($playerImage);
         $defText.empty();
         $defText.text('INEFFECTIVE!').fadeOut(1000);
         $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
-        enemyTurn();
+        compTurn();
 
       }
 
@@ -65,7 +66,7 @@ $( () => {
           $missText.empty();
           $missText.text('Miss!').fadeOut(1000);
           $compStatus.empty().text('HP: ' + currentEnemy.hp + '  \nDEF: ' + currentEnemy.def);
-          enemyTurn();
+          compTurn();
         }
       }
     }; // end knight object
@@ -75,54 +76,133 @@ const archer = {
   hp: 18,
   def: 11,
   init: Math.floor(Math.random() * 20),
-  hitPercentage: 5,
+  hitPercentage: 1,
   playerImage: "'images/Archer-player.png'",
   compImage: "'images/Archer-comp.png'",
   actionsImages: [ "'images/Archer-bow.png'", "'images/Archer-multishot.png'"],
   actionsTitles: ['Snipe','Barrage'],
   actionOne(){
-      console.log(archer.name + ' uses ' + actionsTitles[0] + ' make this an attack!');
-  },
+      if (archer.hitPercentage + Math.floor(Math.random() * 20) > knight.def) {
+          knight.hp -= 2;
+          const $damageText = $('<h2>').attr('class','damage').appendTo($playerImage);
+          $damageText.empty();
+          $damageText.text('- 2').fadeOut(1000);
+          $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
+          checkPlayerHp();
+      } else {
+        const $missText = $('<h2>').attr('class','missed').appendTo($playerImage);
+        $missText.empty();
+        $missText.text('Miss!').fadeOut(1000);
+        $playerStatus.empty().text('HP: ' + knight.hp + '  \nDEF: ' + knight.def);
+        playerTurn();
+      }
+    },
   actionTwo(){
-      console.log('make this multishot!');
-  }
-
+      if (Math.floor(Math.random() * 20) > knight.def) {
+          knight.hp -= 4;
+          const $damageText = $('<h2>').attr('class','damage').appendTo($playerImage);
+          $damageText.empty();
+          $damageText.text('- 4').fadeOut(1000);
+          $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
+          checkPlayerHp();
+      } else {
+        const $missText = $('<h2>').attr('class','missed').appendTo($playerImage);
+        $missText.empty();
+        $missText.text('Miss!').fadeOut(1000);
+        $playerStatus.empty().text('HP: ' + knight.hp + '  \nDEF: ' + knight.def);
+        playerTurn();
+      }
+    }
 }
 
 const warrior = {
   name: 'Warrior',
   hp: 22,
-  def: 10,
+  def: 11,
   init: Math.floor(Math.random() * 20),
-  hitPercentage: 6,
+  hitPercentage: 3,
   playerImage: "'images/Warrior-player.png'",
   compImage: "'images/Warrior-comp.png'",
   actionsImages: [ "'images/Warrior-axe.png'", "'images/Warrior-axe-throw.png'"],
   actionsTitles: ['Hack','Axe Throw'],
   actionOne(){
-      console.log('make this an attack!');
-  },
+      if (warrior.hitPercentage + Math.floor(Math.random() * 20) > knight.def) {
+          knight.hp -= 2;
+          const $damageText = $('<h2>').attr('class','damage').appendTo($playerImage);
+          $damageText.empty();
+          $damageText.text('- 2').fadeOut(1000);
+          $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
+          checkPlayerHp();
+      } else {
+        const $missText = $('<h2>').attr('class','missed').appendTo($playerImage);
+        $missText.empty();
+        $missText.text('Miss!').fadeOut(1000);
+        $playerStatus.empty().text('HP: ' + knight.hp + '  \nDEF: ' + knight.def);
+        playerTurn();
+      }
+    },
   actionTwo(){
-      console.log('make this Axe throw!');
-  }
+      if (Math.floor(Math.random() * 20) > knight.def) {
+          knight.hp -= 5;
+          const $damageText = $('<h2>').attr('class','damage').appendTo($playerImage);
+          $damageText.empty();
+          $damageText.text('- 5').fadeOut(1000);
+          $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
+          checkPlayerHp();
+      } else {
+        const $missText = $('<h2>').attr('class','missed').appendTo($playerImage);
+        $missText.empty();
+        $missText.text('Miss!').fadeOut(1000);
+        $playerStatus.empty().text('HP: ' + knight.hp + '  \nDEF: ' + knight.def);
+        playerTurn();
+      }
+    }
 
 }
 
 const amazon = {
   name: 'Amazon',
   hp: 18,
-  def: 10,
+  def: 6,
   init: Math.floor(Math.random() * 20),
-  hitPercentage: 7,
+  hitPercentage: 6,
   playerImage: "'images/Amazon-player.png'",
   compImage: "'images/Amazon-comp.png'",
   actionsImages: [ "'images/Amazon-sword.png'", "'images/Amazon-shield.png'"],
   actionsTitles: ['Pierce','Shield Wall'],
   actionOne(){
-      console.log('make this an attack!');
-  },
+      if (amazon.hitPercentage + Math.floor(Math.random() * 20) > knight.def) {
+          knight.hp -= 2;
+          const $damageText = $('<h2>').attr('class','damage').appendTo($playerImage);
+          $damageText.empty();
+          $damageText.text('- 2').fadeOut(1000);
+          $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
+          checkPlayerHp();
+      } else {
+        const $missText = $('<h2>').attr('class','missed').appendTo($playerImage);
+        $missText.empty();
+        $missText.text('Miss!').fadeOut(1000);
+        $playerStatus.empty().text('HP: ' + knight.hp + '  \nDEF: ' + knight.def);
+        playerTurn();
+      }
+    },
   actionTwo(){
-      console.log('make this shield wall!');
+    if (Math.floor(Math.random() * 20) > 10) {
+      amazon.def += 2;
+      const $defText = $('<h2>').attr('class','defend').appendTo($compImage);
+      $defText.empty();
+      $defText.text('DEF + 2').fadeOut(1000);
+      $compStatus.empty().text('HP: ' + amazon.hp + '  \n DEF: ' + amazon.def);
+      compTurn();
+    } else {
+      const $defText = $('<h2>').attr('class','ineffective').appendTo($compImage);
+      $defText.empty();
+      $defText.text('INEFFECTIVE!').fadeOut(1000);
+      $compStatus.empty().text('HP: ' + amazon.hp + '  \n DEF: ' + amazon.def);
+      compTurn();
+
+    }
+
   }
 
 }
@@ -132,17 +212,42 @@ const darkKnight = {
   hp: 20,
   def: 15,
   init: Math.floor(Math.random() * 20),
-  hitPercentage: 7,
+  hitPercentage: 6,
   playerImage: "'images/DarkKnight-player.png'",
   compImage: "'images/DarkKnight-comp.png'",
   actionsImages: [ "'images/DarkKnight-sword.png'", "'images/DarkKnight-doublestrike.png'"],
   actionsTitles: ['Rend','Double Strike'],
-  actionOne(){
-      console.log('make this an attack!');
-  },
-  actionTwo(){
-      console.log('make this multi-strike!');
+  actionOne()(darkKnight.hitPercentage + Math.floor(Math.random() * 20) > knight.def) {
+      knight.hp -= 2;
+      const $damageText = $('<h2>').attr('class','damage').appendTo($playerImage);
+      $damageText.empty();
+      $damageText.text('- 2').fadeOut(1000);
+      $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
+      checkPlayerHp();
+  } else {
+    const $missText = $('<h2>').attr('class','missed').appendTo($playerImage);
+    $missText.empty();
+    $missText.text('Miss!').fadeOut(1000);
+    $playerStatus.empty().text('HP: ' + knight.hp + '  \nDEF: ' + knight.def);
+    playerTurn();
   }
+},
+  actionTwo(){
+      if (Math.floor(Math.random() * 20) > knight.def) {
+          knight.hp -= 5;
+          const $damageText = $('<h2>').attr('class','damage').appendTo($playerImage);
+          $damageText.empty();
+          $damageText.text('- 5').fadeOut(1000);
+          $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
+          checkPlayerHp();
+      } else {
+        const $missText = $('<h2>').attr('class','missed').appendTo($playerImage);
+        $missText.empty();
+        $missText.text('Miss!').fadeOut(1000);
+        $playerStatus.empty().text('HP: ' + knight.hp + '  \nDEF: ' + knight.def);
+        playerTurn();
+      }
+    }
 
 }
 
@@ -235,6 +340,9 @@ const closeModal = () => {
         } // end for-loop
   } // end placeComp
 
+
+
+  // check which player goes first and announce on screen
   const checkInitiative = ()=> {
     if ( knight.init > currentEnemy.init) {
       console.log('knight turn');
@@ -253,16 +361,43 @@ const closeModal = () => {
     }
   }
 
+
+  // check the computer opponent HP, if not <= 0 call nextEnemy()
   const checkCompHp = () => {
     if (currentEnemy.hp <= 0) {
+      knight.hp += 20;
+      knight.def = 11;
+      knight.hitPercentage += 1;
+      // NEW MODAL TO ANNOUNCE NEXT ROUND HERE!!!
       nextEnemy();
+    } else {
+      compTurn();
+    }
+  }
+
+  // check player HP, if not <= 0 game continues
+  const checkPlayerHp = () => {
+    if (knight.hp <= 0) {
+      // NEW MODAL TO ANNOUNCE GAME OVER HERE!
+      gameOver();
+    } else {
+      playerTurn();
     }
   }
 
 
 
-  const compTurn = ()=> {
+  const compTurn = () => {
+      if (Math.floor(Math.random() * 20) <= 10) {
+        setTimeout(currentEnemy.actionOne, 1000);
+      } else {
+        setTimeout(currentEnemy.actionTwo, 1000)
 
+      }
+    }
+
+  const playerTurn = () => {
+    console.log("your turn");
   }
 
   const nextEnemy = () => {
@@ -281,12 +416,15 @@ const closeModal = () => {
   // close the modal and start game
   $startBtn.on('click', startGame);
 
+  const gameOver = () => {
+    console.log('GAME OVER!');
+  }
+
   // player action 1
 
 
 
 openModal();
-
 
 
 
