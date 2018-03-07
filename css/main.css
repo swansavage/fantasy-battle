@@ -92,11 +92,11 @@ main {
   display: block;
   width: 45%;
   height: 90%;
-  border: solid 2px white;
+  /* border: solid 2px white; */
 }
 
 .player-status, .comp-status {
-  border: 1px solid green;
+  /* border: 1px solid green; */
   width: 80%;
   height: 10%;
   margin: 10% auto;
@@ -229,16 +229,31 @@ main {
 .damage {
   font-family: sans-serif;
   color: red;
-  font-size: 100px;
+  font-size: 55px;
   text-align: center;
 }
 
 .missed {
   font-family: sans-serif;
   color: white;
-  font-size: 100px;
+  font-size: 55px;
   text-align: center;
 }
+
+.defend {
+  font-family: sans-serif;
+  color: rgb(0, 156, 6);
+  font-size: 55px;
+  text-align: center;
+}
+
+.ineffective {
+    font-family: sans-serif;
+    color: white;
+    font-size: 55px;
+    text-align: center;
+  }
+
 
 .next-round {
   width: 100px;

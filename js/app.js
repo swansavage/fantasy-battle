@@ -11,7 +11,7 @@ $( () => {
   const knight = {
     name: heroName,
     hp: 20,
-    def: 15,
+    def: 10,
     init: Math.floor(Math.random() * 20),
     hitPercentage: 3,
     playerImage: "'images/Knight-player.png'",
@@ -19,30 +19,54 @@ $( () => {
     actionsImages: [ "'images/Knight-sword.png'", "'/images/Knight-shield.png'", "'/images/run.png'" ],
     actionsTitles: ['Slash', 'Fend', 'Charge'],
     actionOne() {
-
-        console.log(currentEnemy);
         if (knight.hitPercentage + Math.floor(Math.random() * 20) > currentEnemy.def) {
             currentEnemy.hp -= 2;
             const $damageText = $('<h2>').attr('class','damage').appendTo($compImage);
             $damageText.empty();
             $damageText.text('- 2').fadeOut(1000);
-            $compStatus.empty().text(currentEnemy.name + '\'s HP: ' + currentEnemy.hp);
+            $compStatus.empty().text('HP: ' + currentEnemy.hp + '  \n DEF: ' + currentEnemy.def);
             checkCompHp();
         } else {
           const $missText = $('<h2>').attr('class','missed').appendTo($compImage);
           $missText.empty();
           $missText.text('Miss!').fadeOut(1000);
-
+          $compStatus.empty().text('HP: ' + currentEnemy.hp + '  \nDEF: ' + currentEnemy.def);
+          enemyTurn();
         }
     },
     actionTwo() {
-        console.log('make this shield Bash!');
+      if (Math.floor(Math.random() * 20) > 10) {
+        knight.def += 2;
+        const $defText = $('<h2>').attr('class','defend').appendTo($playerImage);
+        $defText.empty();
+        $defText.text('DEF + 2').fadeOut(1000);
+        $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
+      } else {
+        const $defText = $('<h2>').attr('class','ineffective').appendTo($playerImage);
+        $defText.empty();
+        $defText.text('INEFFECTIVE!').fadeOut(1000);
+        $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
+
+      }
+
     },
     actionThree() {
-        console.log('make this charge!');
+        if (Math.floor(Math.random() * 20) > currentEnemy.def) {
+          currentEnemy.hp -= 4;
+          const $damageText = $('<h2>').attr('class','damage').appendTo($compImage);
+          $damageText.empty();
+          $damageText.text('- 4').fadeOut(1000);
+          $compStatus.empty().text('HP: ' + currentEnemy.hp + '  \n DEF: ' + currentEnemy.def);
+          checkCompHp();
+        } else {
+          const $missText = $('<h2>').attr('class','missed').appendTo($compImage);
+          $missText.empty();
+          $missText.text('Miss!').fadeOut(1000);
+          $compStatus.empty().text('HP: ' + currentEnemy.hp + '  \nDEF: ' + currentEnemy.def);
+          enemyTurn();
+        }
+      }
     }
-
-  }
 
 const archer = {
   name: 'Archer',
@@ -154,11 +178,12 @@ const openModal = () => {
   $modal.css('display','block');
 }
 
+// close modal and start the game after user enters hero name
 const startGame = () => {
   heroName = $inputBox.val();
   closeModal();
   placeHero();
-  placeComp(archer);
+  placeComp();
 }
 
 // close modal
@@ -172,7 +197,7 @@ const closeModal = () => {
   const placeHero = () => {
       $playerImage.attr('id','knight-player');
       $playerActions.css('display','flex')
-      $playerStatus.text(heroName + '\'s HP: ' + knight.hp);
+      $playerStatus.text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
         for (i = 0; i < knight.actionsImages.length; i++) {
             const $actionBtn = $('<div>').addClass('btn')
                                          .attr('id','player-action-' + [i + 1])
@@ -193,7 +218,7 @@ const closeModal = () => {
       compName = currentEnemy.name;
       $compImage.attr('id', currentEnemy.name.toLowerCase() + '-comp');
       $compActions.css('display','flex')
-      $compStatus.text(currentEnemy.name + '\'s HP: ' + currentEnemy.hp);
+      $compStatus.text('HP: ' + currentEnemy.hp + '  \n DEF: ' + currentEnemy.def );
         for ( i = 0; i < currentEnemy.actionsImages.length; i++) {
           const $actionBtn = $('<div>').addClass('btn')
                                        .attr('id','comp-action-' + [i+1])
@@ -208,8 +233,12 @@ const closeModal = () => {
     }
   }
 
+  const enemyTurn = ()=> {
+
+  }
+
   const nextEnemy = () => {
-    if (currentEnemy === darkknight) {
+    if (currentEnemy === darkKnight) {
       gameWin();
     }
     enemies.shift();
