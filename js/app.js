@@ -336,7 +336,8 @@ const closeModal = () => {
         for (i = 0; i < knight.actionsImages.length; i++) {
             const $actionBtn = $('<div>').addClass('btn')
                                          .attr('id','player-action-' + [i + 1])
-                                         .appendTo($playerActions);
+                                         .appendTo($playerActions)
+
 
         } // end for-loop
         const $playerActionOne = $('#player-action-1');
