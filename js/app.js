@@ -300,6 +300,11 @@ const $gameWinModal = $('#game-win-modal');
 const $gameWinModalBox = $('#game-win-modal-box');
 // grab the game-win-button
 const $gameWinButton = $('#game-win-btn')
+// grab the game-lose-modal div
+const $gameLoseModal = $('#game-lose-modal');
+// grab the game-lose-modal-btn div
+const $gameLoseBtn = $('#game-lose-btn')
+
 
 
 // open modal
@@ -435,7 +440,7 @@ const closeModal = () => {
 
 
   const gameOver = () => {
-    console.log('GAME OVER!');
+    gameLoseModal();
   }
 
 
@@ -466,6 +471,18 @@ const closeModal = () => {
   const closeGameWinModal = () => {
     $gameWinModal.css('display','none');
   }
+
+
+  const gameLoseModal = () => {
+    $gameLoseModal.css('display','block');
+  }
+
+  const closeGameLoseModal = () => {
+    $gameLoseModal.css('display','none');
+  }
+
+
+
   // close the modal and start game
   $startBtn.on('click', startGame);
 
@@ -474,8 +491,17 @@ const closeModal = () => {
   $newRoundBtn.on('click', nextEnemy)
 
   // close game win modal and start new game
-  $gameWinButton.on('click', closeGameWinModal)
-  $gameWinButton.on('click', location.reload)
+  $gameWinButton.on('click', closeGameWinModal);
+  $gameWinButton.on('click', ()=>{
+      location.reload();
+  });
+
+
+  // close game lose modal and start new game
+  $gameLoseBtn.on('click', closeGameLoseModal);
+  $gameLoseBtn.on('click', ()=>{
+      location.reload();
+  });
 
 openModal();
 

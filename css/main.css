@@ -12,7 +12,7 @@
   background-position: center;
 }
 
-.modal, .new-modal, #game-win-modal {
+.modal, .new-modal, #game-win-modal, #game-lose-modal{
 	background-color: rgba(0,0,0,0.4);
 	position: fixed;
 	top: 0;
@@ -39,7 +39,7 @@
   text-align: center;
 }
 
-#new-round-modal-box, #game-win-modal-box {
+#new-round-modal-box, #game-win-modal-box, #game-lose-modal-box {
 	background: white;
 	height: 195px;
 	width: 550px;
@@ -83,7 +83,7 @@
   margin: 5px auto;
 }
 
-#new-round-btn, #game-win-btn {
+#new-round-btn, #game-win-btn, #game-lose-btn {
   display: block;
   background-color: rgb(153, 29, 29);
   color: white;
@@ -92,15 +92,12 @@
   margin: 10px auto;
 }
 
-#start-btn:hover {
+#start-btn:hover, #new-round-btn:hover, #game-win-btn, #game-lose-btn {
   border: 1px solid white;
   cursor: pointer;
 }
 
-#new-round-btn:hover {
-  border: 1px solid white;
-  cursor: pointer;
-}
+
 header {
   display: flex;
   background: rgb(187, 166, 75);
