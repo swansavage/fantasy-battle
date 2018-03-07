@@ -41,11 +41,13 @@ $( () => {
         $defText.empty();
         $defText.text('DEF + 2').fadeOut(1000);
         $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
+        enemyTurn();
       } else {
         const $defText = $('<h2>').attr('class','ineffective').appendTo($playerImage);
         $defText.empty();
         $defText.text('INEFFECTIVE!').fadeOut(1000);
         $playerStatus.empty().text('HP: ' + knight.hp + '  \n DEF: ' + knight.def);
+        enemyTurn();
 
       }
 
@@ -66,7 +68,7 @@ $( () => {
           enemyTurn();
         }
       }
-    }
+    }; // end knight object
 
 const archer = {
   name: 'Archer',
@@ -156,6 +158,10 @@ const $modal = $('#modal');
 const $startBtn = $('#start-btn');
 // grab the input box
 const $inputBox = $('#modal-start');
+// grab the main-container
+const $mainContainer = $('main');
+// grab the announce-section div
+const $announceSection = $('#announce-section');
 // grab the player-container div
 const $playerContainer = $('.player-container');
 // grab the comp-container div
@@ -173,6 +179,7 @@ const $playerStatus = $('.player-status');
 // grab the comp-status div
 const $compStatus = $('.comp-status');
 
+
 // open modal
 const openModal = () => {
   $modal.css('display','block');
@@ -184,6 +191,7 @@ const startGame = () => {
   closeModal();
   placeHero();
   placeComp();
+  checkInitiative();
 }
 
 // close modal
@@ -227,13 +235,33 @@ const closeModal = () => {
         } // end for-loop
   } // end placeComp
 
+  const checkInitiative = ()=> {
+    if ( knight.init > currentEnemy.init) {
+      console.log('knight turn');
+      const $initText = $('<h2>').attr('class','init');
+      $announceSection.empty();
+      $initText.text(heroName + ' strikes first!').fadeOut( 2000 );
+      $announceSection.append($initText);
+      playerTurn();
+    } else {
+      console.log('comp turn');
+      const $initText = $('<h2>').attr('class','init');
+      $announceSection.empty();
+      $initText.text(currentEnemy.name + ' strikes first!').fadeOut( 2000 );
+      $announceSection.append($initText);
+      compTurn();
+    }
+  }
+
   const checkCompHp = () => {
     if (currentEnemy.hp <= 0) {
       nextEnemy();
     }
   }
 
-  const enemyTurn = ()=> {
+
+
+  const compTurn = ()=> {
 
   }
 
