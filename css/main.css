@@ -109,7 +109,7 @@ main {
   text-align: left;
 }
 
-.comp-statu {
+.comp-status {
   text-align: right;
 }
 
@@ -231,4 +231,17 @@ main {
   color: red;
   font-size: 100px;
   text-align: center;
+}
+
+.missed {
+  font-family: sans-serif;
+  color: white;
+  font-size: 100px;
+  text-align: center;
+}
+
+.next-round {
+  width: 100px;
+  height: 40px;
+  background-color: green;
 }

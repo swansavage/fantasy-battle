@@ -13,18 +13,25 @@ $( () => {
     hp: 20,
     def: 15,
     init: Math.floor(Math.random() * 20),
-    hitPercentage: 7,
+    hitPercentage: 3,
     playerImage: "'images/Knight-player.png'",
     compImage: "'images/Knight-comp.png'",
     actionsImages: [ "'images/Knight-sword.png'", "'/images/Knight-shield.png'", "'/images/run.png'" ],
     actionsTitles: ['Slash', 'Fend', 'Charge'],
     actionOne() {
+
+        console.log(knight.hitPercentage + Math.floor(Math.random() * 20));
         if (knight.hitPercentage + Math.floor(Math.random() * 20) > currentEnemy.def) {
-            enemies[0].hp -= 2;
+            currentEnemy.hp -= 2;
             const $damageText = $('<h2>').attr('class','damage').appendTo($compImage);
+            $damageText.empty();
             $damageText.text('- 2').fadeOut(1000);
-            $compStatus.empty().text(enemies[0].name + '\'s HP: ' + enemies[0].hp);
+            $compStatus.empty().text(currentEnemy.name + '\'s HP: ' + currentEnemy.hp);
+            checkCompHp();
         } else {
+          const $missText = $('<h2>').attr('class','missed').appendTo($compImage);
+          $missText.empty();
+          $missText.text('Miss!').fadeOut(1000);
           console.log('NOT THIS TIME');
         }
     },
@@ -40,7 +47,7 @@ $( () => {
 const archer = {
   name: 'Archer',
   hp: 18,
-  def: 8,
+  def: 11,
   init: Math.floor(Math.random() * 20),
   hitPercentage: 5,
   playerImage: "'images/Archer-player.png'",
@@ -125,6 +132,10 @@ const $modal = $('#modal');
 const $startBtn = $('#start-btn');
 // grab the input box
 const $inputBox = $('#modal-start');
+// grab the player-container div
+const $playerContainer = $('.player-container');
+// grab the comp-container div
+const $compContainer = $('.comp-container');
 // grab the player-image div
 const $playerImage = $('.player-image');
 // grab the player actions div
@@ -178,21 +189,28 @@ const closeModal = () => {
 
 
   // add computer opponent to document
-  const placeComp = (enemy) => {
-      compName = enemy.name;
-      const $plug = enemy.name.toLowerCase();
-      $compImage.attr('id', $plug + '-comp');
+  const placeComp = () => {
+      compName = currentEnemy.name;
+      $compImage.attr('id', currentEnemy.name.toLowerCase() + '-comp');
       $compActions.css('display','flex')
-      $compStatus.text(enemy.name + '\'s HP: ' + enemy.hp);
-        for ( i = 0; i < enemy.actionsImages.length; i++) {
+      $compStatus.text(currentEnemy.name + '\'s HP: ' + currentEnemy.hp);
+        for ( i = 0; i < currentEnemy.actionsImages.length; i++) {
           const $actionBtn = $('<div>').addClass('btn')
                                        .attr('id','comp-action-' + [i+1])
-                                       .css({"background-image": "url(" + enemy.actionsImages[i] + ")", "background-position": "center"})
+                                       .css({"background-image": "url(" + currentEnemy.actionsImages[i] + ")", "background-position": "center"})
                                        .appendTo($compActions);
         } // end for-loop
   } // end placeComp
 
+  const checkCompHp = () => {
+    if (currentEnemy.hp <= 0) {
+      nextEnemy();
+    }
+  }
 
+  const nextEnemy = () => {
+    
+  }
 
 
   // close the modal and start game
