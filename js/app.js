@@ -6,9 +6,9 @@ $( () => {
   let heroName = "";
   // create a variable to hold the name of which Enemy hero we are facing
   let compName = "";
-
+  // global boolean to keep track of user turn
   let userTurn = true;
-
+  // round counter
   let currentRound = 1;
 
   const knight = {
@@ -115,7 +115,7 @@ const archer = {
         playerTurn();
       }
     }
-}
+} // end archer object
 
 const warrior = {
   name: 'Warrior',
@@ -160,7 +160,7 @@ const warrior = {
       }
     }
 
-}
+} // end warrior object
 
 const amazon = {
   name: 'Amazon',
@@ -207,7 +207,7 @@ const amazon = {
 
   }
 
-}
+} // end amazon object
 
 const darkKnight = {
   name: 'DarkKnight',
@@ -252,7 +252,7 @@ const darkKnight = {
       }
     }
 
-}
+} // end darkKnight object
 
 // array of all character objects
 const enemies = [archer, warrior, amazon, darkKnight]
@@ -368,21 +368,19 @@ const closeModal = () => {
   // check which player goes first and announce on screen
   const checkInitiative = ()=> {
     if ( knight.init > currentEnemy.init) {
-      console.log('knight turn');
       const $initText = $('<h2>').attr('class','init');
       $announceSection.empty();
       $initText.text(heroName + ' strikes first!').fadeOut( 3000 );
       $announceSection.append($initText);
       playerTurn();
     } else {
-      console.log('comp turn');
       const $initText = $('<h2>').attr('class','init');
       $announceSection.empty();
       $initText.text(currentEnemy.name + ' strikes first!').fadeOut( 3000 );
       $announceSection.append($initText);
       compTurn();
     }
-  }
+  } // end checkInitiative
 
 
   // check the computer opponent HP, if not <= 0 call nextEnemy()
@@ -393,37 +391,37 @@ const closeModal = () => {
       knight.hitPercentage += 1;
       currentRound += 1;
       newRoundModal();
-      // nextEnemy();
+
     } else {
       compTurn();
     }
-  }
+  } // end checkCompHp
 
   // check player HP, if not <= 0 game continues
   const checkPlayerHp = () => {
     if (knight.hp <= 0) {
-      // NEW MODAL TO ANNOUNCE GAME OVER HERE!
       gameOver();
     } else {
       playerTurn();
     }
-  }
+  } // end checkPlayerHp
 
 
-
+  // randomly choose computer action and add a delay
   const compTurn = () => {
       if (Math.floor(Math.random() * 20) <= 10) {
         setTimeout(currentEnemy.actionOne, 1000);
       } else {
-        setTimeout(currentEnemy.actionTwo, 1000)
-
+        setTimeout(currentEnemy.actionTwo, 1000);
       }
-    }
+    } // end compTurn
 
+  // will eventually add turn visual indicators and global boolean to determine player can go
   const playerTurn = () => {
     console.log("your turn");
-  }
+  } // end playerTurn
 
+  // check if enemy is the last enemy, if not move onto the next one in the enemies array
   const nextEnemy = () => {
     if (currentEnemy === darkKnight) {
       gameWin();
@@ -433,32 +431,33 @@ const closeModal = () => {
       $('.btn').remove()
       startGame();
     }
-  }
+  } // end nextEnemy
 
+  // open the gameWinModal
   const gameWin = () => {
     gameWinModal();
   }
 
-
+  // open the gameLoseModal
   const gameOver = () => {
     gameLoseModal();
   }
 
-
+  // if the current enemy defeated is last enemy invoke gameWin(). if not, then update modal to reflect current round
   const newRoundModal = () => {
       if (currentEnemy === darkKnight) {
         gameWin();
+      } else {
+        $newRoundModal.css('display','block')
+        const $modalHeader = $('<h1>')
+        const $modalText = $('<p>')
+        $('#new-round-modal-box p').remove();
+        $('#new-round-modal-box h1').remove();
+        $newRoundModalBox.prepend($modalHeader);
+        $modalText.text('You have defeated the ' + currentEnemy.name + ' !').insertAfter('#new-round-modal-box h1')
+        $('#new-round-modal-box h1').text('Get ready for Round ' + currentRound);
       }
-    $newRoundModal.css('display','block')
-    const $modalHeader = $('<h1>')
-    const $modalText = $('<p>')
-    $('#new-round-modal-box p').remove();
-    $('#new-round-modal-box h1').remove();
-    $newRoundModalBox.prepend($modalHeader);
-    $modalText.text('You have defeated the ' + currentEnemy.name + ' !').insertAfter('#new-round-modal-box h1')
-    $('#new-round-modal-box h1').text('Get ready for Round ' + currentRound);
-
-  }
+  } // end newRoundModal
 
   const closeNewRoundModal = () => {
     $newRoundModal.css('display','none');
