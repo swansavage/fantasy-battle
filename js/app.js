@@ -8,7 +8,7 @@ $( () => {
   let compName = "";
   // global boolean to keep track of user turn
   let userTurn = true;
-  // round counter
+  /// round counter
   let currentRound = 1;
 
   const knight = {
